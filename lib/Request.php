@@ -32,6 +32,11 @@ class Request extends Message implements RequestInterface {
     protected $url;
 
     /**
+     * @var string
+     */
+    private $absoluteUrl;
+
+    /**
      * Creates the request object
      *
      * @param string $method
