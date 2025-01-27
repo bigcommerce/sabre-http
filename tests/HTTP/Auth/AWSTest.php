@@ -2,10 +2,11 @@
 
 namespace Sabre\HTTP\Auth;
 
+use PHPUnit\Framework\TestCase;
 use Sabre\HTTP\Request;
 use Sabre\HTTP\Response;
 
-class AWSTest extends \PHPUnit_Framework_TestCase {
+class AWSTest extends TestCase {
 
     /**
      * @var Sabre\HTTP\Response
@@ -24,7 +25,7 @@ class AWSTest extends \PHPUnit_Framework_TestCase {
 
     const REALM = 'SabreDAV unittest';
 
-    function setUp() {
+    function setUp(): void {
 
         $this->response = new Response();
         $this->request = new Request('GET', '/');

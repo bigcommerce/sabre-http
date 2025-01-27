@@ -2,10 +2,11 @@
 
 namespace Sabre\HTTP\Auth;
 
+use PHPUnit\Framework\TestCase;
 use Sabre\HTTP\Request;
 use Sabre\HTTP\Response;
 
-class DigestTest extends \PHPUnit_Framework_TestCase {
+class DigestTest extends TestCase {
 
     /**
      * @var Sabre\HTTP\Response
@@ -26,7 +27,7 @@ class DigestTest extends \PHPUnit_Framework_TestCase {
 
     const REALM = 'SabreDAV unittest';
 
-    function setUp() {
+    function setUp(): void {
 
         $this->response = new Response();
         $this->request = new Request('GET', '/');
@@ -95,7 +96,7 @@ class DigestTest extends \PHPUnit_Framework_TestCase {
     function testInvalidDigest2() {
 
         $this->request->setMethod('GET');
-        $this->request->setHeader('Authorization', 'basic blablabla');
+        $this->request->setHeader('Authorization', 'Basic dXNlcjpwYXNzd29yZA');
 
         $this->auth->init();
         $this->assertFalse($this->auth->validateA1(md5('user:realm:password')));
