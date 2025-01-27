@@ -2,12 +2,14 @@
 
 namespace Sabre\HTTP;
 
-class MessageDecoratorTest extends \PHPUnit_Framework_TestCase {
+use PHPUnit\Framework\TestCase;
+
+class MessageDecoratorTest extends TestCase {
 
     protected $inner;
     protected $outer;
 
-    function setUp() {
+    function setUp(): void {
 
         $this->inner = new Request('GET', '/');
         $this->outer = new RequestDecorator($this->inner);

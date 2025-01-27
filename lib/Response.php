@@ -98,10 +98,10 @@ class Response extends Message implements ResponseInterface {
      * Creates the response object
      *
      * @param string|int $status
-     * @param array $headers
+     * @param ?array $headers
      * @param resource $body
      */
-    function __construct($status = null, array $headers = null, $body = null) {
+    function __construct($status = null, ?array $headers = null, $body = null) {
 
         if (!is_null($status)) $this->setStatus($status);
         if (!is_null($headers)) $this->setHeaders($headers);
@@ -145,7 +145,7 @@ class Response extends Message implements ResponseInterface {
      */
     function setStatus($status) {
 
-        if (ctype_digit($status) || is_int($status)) {
+        if (is_numeric($status) || is_int($status)) {
 
             $statusCode = $status;
             $statusText = isset(self::$statusCodes[$status]) ? self::$statusCodes[$status] : 'Unknown';

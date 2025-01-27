@@ -2,7 +2,9 @@
 
 namespace Sabre\HTTP;
 
-class RequestTest extends \PHPUnit_Framework_TestCase {
+use PHPUnit\Framework\TestCase;
+
+class RequestTest extends TestCase {
 
     function testConstruct() {
 
@@ -108,10 +110,8 @@ class RequestTest extends \PHPUnit_Framework_TestCase {
 
     }
 
-    /**
-     * @expectedException \LogicException
-     */
     function testGetPathOutsideBaseUrl() {
+        $this->expectException(\LogicException::class);
 
         $request = new Request('GET', '/bar/');
         $request->setBaseUrl('/foo/');

@@ -170,7 +170,7 @@ class Client extends EventEmitter {
      *
      * @return void
      */
-    function sendAsync(RequestInterface $request, callable $success = null, callable $error = null) {
+    function sendAsync(RequestInterface $request, ?callable $success = null, ?callable $error = null) {
 
         $this->emit('beforeRequest', [$request]);
         $this->sendAsyncInternal($request, $success, $error);

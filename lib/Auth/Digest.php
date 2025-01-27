@@ -44,7 +44,7 @@ class Digest extends AbstractAuth {
     /**
      * Initializes the object
      */
-    function __construct(string $realm = 'SabreTooth', RequestInterface $request, ResponseInterface $response) {
+    function __construct(?string $realm, RequestInterface $request, ResponseInterface $response) {
 
         $this->nonce = uniqid();
         $this->opaque = md5($realm);
@@ -124,9 +124,16 @@ class Digest extends AbstractAuth {
      */
     protected function validate() : bool {
 
-        $A2 = $this->request->getMethod() . ':' . $this->digestParts['uri'];
+        $uri = $this->digestParts['uri'] ?? '';
+        $qop = $this->digestParts['qop'] ?? '';
+        $nonce = $this->digestParts['nonce'] ?? '';
+        $nc = $this->digestParts['nc'] ?? '';
+        $cnonce = $this->digestParts['cnonce'] ?? '';
+        $response = $this->digestParts['response'] ?? '';
 
-        if ($this->digestParts['qop'] == 'auth-int') {
+        $A2 = $this->request->getMethod() . ':' . $uri;
+
+        if ($qop == 'auth-int') {
             // Making sure we support this qop value
             if (!($this->qop & self::QOP_AUTHINT)) return false;
             // We need to add an md5 of the entire request body to the A2 part of the hash
@@ -141,9 +148,9 @@ class Digest extends AbstractAuth {
 
         $A2 = md5($A2);
 
-        $validResponse = md5("{$this->A1}:{$this->digestParts['nonce']}:{$this->digestParts['nc']}:{$this->digestParts['cnonce']}:{$this->digestParts['qop']}:{$A2}");
+        $validResponse = md5("{$this->A1}:{$nonce}:{$nc}:{$cnonce}:{$qop}:{$A2}");
 
-        return $this->digestParts['response'] == $validResponse;
+        return $response == $validResponse;
 
 
     }

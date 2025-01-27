@@ -2,7 +2,10 @@
 
 namespace Sabre\HTTP;
 
-class ResponseTest extends \PHPUnit_Framework_TestCase {
+use InvalidArgumentException;
+use PHPUnit\Framework\TestCase;
+
+class ResponseTest extends TestCase {
 
     function testConstruct() {
 
@@ -21,10 +24,9 @@ class ResponseTest extends \PHPUnit_Framework_TestCase {
 
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     */
     function testInvalidStatus() {
+
+        $this->expectException(InvalidArgumentException::class);
 
         $response = new Response(1000);
 
