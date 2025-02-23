@@ -41,10 +41,10 @@ class Request extends Message implements RequestInterface {
      *
      * @param string $method
      * @param string $url
-     * @param array $headers
+     * @param array|null $headers
      * @param resource $body
      */
-    function __construct($method = null, $url = null, array $headers = null, $body = null) {
+    function __construct($method = null, $url = null, ?array $headers = null, $body = null) {
 
         if (is_array($method)) {
             throw new InvalidArgumentException('The first argument for this constructor should be a string or null, not an array. Did you upgrade from sabre/http 1.0 to 2.0?');
